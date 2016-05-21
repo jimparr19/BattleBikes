@@ -1,0 +1,55 @@
+# Useful links:
+# http://docs.python-guide.org/en/latest/dev/virtualenvs/
+# http://stackoverflow.com/questions/7300321/how-to-use-pythons-pip-to-download-and-keep-the-zipped-files-for-a-package
+# ----------------------------------------------------------------------------
+
+
+# Setting up a Python virtual environment
+# A virtual environment is basically a isolated copy of a fresh Python
+# install. This helps you keep track of which packages a project requires
+# whilst keeping the system's Python clean.
+# ----------------------------------------------------------------------------
+
+# install pip for Python3
+sudo apt-get install python3-pip
+
+# install virtualenv for Python3
+sudo pip3 install virtualenv
+
+# create a virtual environment for Python
+virtualenv venv
+
+# make sure it is using Python3
+virtualenv -p /usr/bin/python3 venv
+
+# now use the environment by sourcing it to the current shell
+# your prompt will change to indicate that it is active
+source venv/bin/activate
+
+
+# Packages and dependencies (requires an activated VENV)
+# ----------------------------------------------------------------------------
+
+# packages can be downloaded and installed as normal, e.g.
+pip install flask
+
+# you can capture the dependencies used by a project by using pip freeze:
+pip freeze > dependencies.txt
+
+# so rather than installing the pacakges by hand, you should do the following
+pip install -r dependencies.txt
+
+# note, to see which dependencies are currently required just do
+cat dependencies.txt
+
+
+# Pycharm Community Edition IDE
+# ----------------------------------------------------------------------------
+
+Pycharm is the best IDE for Python I have found.
+To configure the IDE with the project do:
++ File->New Project
++ On the Create Project Dialog, set the location to the Project and then...
++ ... for the interpreter select the config cog
++ select "Add Local"
++ select Python that resides in the venv (<ProjectDir>/venv/bin/python)
