@@ -1,20 +1,10 @@
 import argparse
-from flask import Flask
-from flask import render_template
-app = Flask(__name__)
-
-
-# ----------------------------------------------------------------------------
-
-@app.route("/")
-def hello():
-    return render_template('root.html', value=1)
 
 # ----------------------------------------------------------------------------
 
 
-def main(mode, port):
-    app.run()
+
+
 
 # ----------------------------------------------------------------------------
 
@@ -34,15 +24,16 @@ def parse_port(value):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('mode',
-                        type=parse_mode,
-                        nargs=1,
-                        help='Mode. Either "client" or "server"')
 
-    parser.add_argument('--port',
+    parser.add_argument('--http_port',
                         type=parse_port,
-                        help='Tcp port number')
+                        help='Http port number',
+                        default=1499)
+
+    parser.add_argument('--tcp_port',
+                        type=parse_port,
+                        help='Tcp port number',
+                        default=1500)
 
     args = parser.parse_args()
 
-    main(args.mode[0], port=args.port)

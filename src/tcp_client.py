@@ -1,12 +1,20 @@
 import socket
 import time
+import signal
+import queue
 
-TERMINATE_TCP_CLIENT = False
+
+TERMINATE = False
+
+
+def terminate():
+    print("Terminating TCP Client")
+    global TERMINATE
+    TERMINATE = True
 
 
 def signal_handler(signal, frame):
-    global TERMINATE_TCP_CLIENT
-    TERMINATE_TCP_CLIENT= True
+    terminate()
 
 
 def main_loop():
@@ -17,8 +25,12 @@ def main_loop():
         client_socket.send(b"hello")
         time.sleep(30)
 
-        if TERMINATE_TCP_CLIENT:
+        if TERMINATE:
             break
 
+    print("***Terminated TCP Client***")
+
+
 if __name__ == '__main__':
+    signal.signal(signal.SIGINT, signal_handler)
     main_loop()

@@ -14,3 +14,7 @@ def hello():
 
 def main(mode, port):
     app.run()
+
+
+if __name__ == '__main__':
+	main()

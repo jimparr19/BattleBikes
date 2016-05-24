@@ -2,14 +2,18 @@ import socket
 import signal
 import time
 import select
+import queue
 
 
-# A blocking TcpServer.
-# It is important that when performing blocking operations such as "accept" and "recv" that you don't wait for too long
-# for the operation to complete otherwise you'll starve the application of processing cycles.
-# With this in mind, the minimal time you can wait is 0.001 seconds. Anything less get's ignored because the cost of
-# the operating system performing a context switch out-weights this time i.e. it is impossible to context switch
+# tcp_server.py - A blocking TcpServer.
+# It is important that when performing blocking operations such as "accept" and
+# "recv" that you don't wait for too long for the operation to complete
+# otherwise you'll starve the application of processing cycles.
+# With this in mind, the minimal time you can wait is 0.001 seconds. Anything
+# less get's ignored because the cost of the operating system performing a
+# context switch out-weights this time i.e. it is impossible to context switch
 # faster than 1/0.001 times a second.
+# ----------------------------------------------------------------------------
 class TcpServer:
     def __init__(self, port, max_connections=1):
         self.port = port
@@ -69,12 +73,17 @@ class TcpServer:
 
 
 
-TERMINATE_TCP_SERVER = False
+TERMINATE = False
+
+
+def terminate():
+    print("Terminating TCP Server")
+    global TERMINATE
+    TERMINATE = True
 
 
 def signal_handler(signal, frame):
-    global TERMINATE_TCP_SERVER
-    TERMINATE_TCP_SERVER = True
+    terminate()
 
 
 def main_loop(port=1500, max_connections=1):
@@ -85,11 +94,13 @@ def main_loop(port=1500, max_connections=1):
 
         # it is important to allocate some time to the checking of termination
         # signals i.e. when the user presses Control-C for example.
-        if TERMINATE_TCP_SERVER:
+        if TERMINATE:
             break
 
         # TODO: Remove - Throttles the main loop for now - makes things easier to debug.
-        time.sleep(0.001)
+        time.sleep(1)
+
+    print("***Terminated TCP Server***")
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, signal_handler)
