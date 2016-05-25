@@ -2,8 +2,6 @@ import socket
 import signal
 import time
 import select
-import queue
-
 
 # tcp_server.py - A blocking TcpServer.
 # It is important that when performing blocking operations such as "accept" and
@@ -70,7 +68,6 @@ class TcpServer:
         print('poll_active_connections')
         for connection in self.active_connections:
             self.handle_active_connection(connection)
-
 
 
 TERMINATE = False
