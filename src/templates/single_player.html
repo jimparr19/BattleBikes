@@ -3,16 +3,35 @@
   <meta charset="UTF-8">
   <title>Single Player Mode</title>
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">-->
   <!-- Optional theme -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+  <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">-->
   <!-- APP js -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <!-- add d3 from web -->
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <style>
+  body {
+	font-family: Courier,  Verdana, monospace, sans-serif;
+  }
+  h1 {
+	color: #f3f3f3;
+	text-align: center;
+	font-size: 80px;
+	font-weight: 550
+	}
+h2 {
+	color: #ee3e80;
+  }
+p {
+	color: #665544;
+  }
+#grad1 {
+	height: 90px;
+  	background: linear-gradient(#0fb8ad, #2cb5e8);
+  }
   path {
-    stroke: steelblue;
+    stroke: #2cb5e8;
     stroke-width: 1;
     fill: none;
   }
@@ -20,16 +39,13 @@
     shape-rendering: crispEdges;
   }
 
-  .x.axis line {
-    stroke: lightgrey;
-  }
-
   .x.axis .minor {
     stroke-opacity: .5;
   }
 
-  .x.axis path {
-    display: none;
+  .x.axis line, .x.axis path {
+    fill: none;
+    stroke: #000;
   }
 
   .y.axis line, .y.axis path {
@@ -40,15 +56,19 @@
   </style>
 </head>
 <body>
+  <div id="grad1">
+	<h1>Battle:Bikes</h1>
+  </div>
+  <h2>Player 1</h2>
   <div id="graph" class="aGraph" style="position:absolute;top:20pxleft:400; float:left"></div>
 </body>
 
 
 <script>
 
-                    var margin = {top: 30, right: 20, bottom: 70, left: 50},
-                    width = 600 - margin.left - margin.right,
-                    height = 270 - margin.top - margin.bottom;
+                    var margin = {top: 20, right: 20, bottom: 70, left: 50},
+                    width = 1000 - margin.left - margin.right,
+                    height = 400 - margin.top - margin.bottom;
 
 
                     //Create the Scale we will use for the Axis
@@ -58,7 +78,7 @@
 
 
                     var yaxisScale = d3.scale.linear()
-                    .domain([0, 5])
+                    .domain([0, 1])
                     .range([ height,0]);
 
                     var xAxis = d3.svg.axis()
